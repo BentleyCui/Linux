@@ -17,7 +17,7 @@ int main(){
     }
 
     pid_t pid;
-    pid = fork(); // 创建子进程
+    pid = fork(); // 创建子进程，子进程同样持有管道的读和写端
     char *str = "hello pipe\n";
 
     if(pid > 0){    //  父进程：若让父进程写，子进程读
