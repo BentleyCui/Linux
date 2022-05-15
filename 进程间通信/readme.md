@@ -16,6 +16,10 @@ Linux 环境下，进程地址空间相互独立，每个进程各自有不同�
 
 **（4）本地套接字**（最稳定）
 
+****
+
+****
+
 
 
 ### 管道
@@ -100,6 +104,10 @@ pipe_lswc.cpp
 
 注意：需要关闭父进程的读写端，保证数据的单向流动
 
+****
+
+****
+
 
 
 ###  FIFO 命名管道
@@ -128,7 +136,9 @@ fifo_read.cpp
 
 [fifo_read.cpp](https://github.com/BentleyCui/Linux/blob/main/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/fifo_read.cpp)
 
+****
 
+****
 
 ### 文件用于进程通信
 
@@ -137,6 +147,8 @@ fifo_read.cpp
 在父子进程的PCB中，文件描述符表相同，指向同一文件
 
 无血缘关系的两个进程也可以通过文件进行进程通信
+
+****
 
 
 
@@ -250,6 +262,5 @@ int *p = mmap(NULL, 4, PROT_READ|PROT_WRITE, MAP_SHARED|MAP_ANONYMOUS, -1, 0);
 
 
 
-
-
 ​    
+
