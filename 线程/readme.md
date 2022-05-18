@@ -40,6 +40,68 @@ ps -Lf 进程id
 
 实际上，无论是创建进程的 fork，还是创建线程的 pthread_create，底层实现都是调用同一个内核函数 clone。  
 
-** Linux 内核是不区分进程和线程的。只在用户层面上进行区分。所以，线程所有操作函数 pthread_\* 是库函数，而非系统调用。  **
+**Linux 内核是不区分进程和线程的。只在用户层面上进行区分。所以，线程所有操作函数 pthread_\* 是库函数，而非系统调用。  **
 
+​    
 
+****
+
+## 线程共享
+
+**共享资源：**
+
+1. 文件描述符表
+2. 每种信号的处理方式
+3. 当前工作目录
+4. 用户 ID 和组 ID
+5. 内存地址空间 (.text/.data/.bss/heap/共享库) 
+
+**非共享资源：**
+
+1. 线程id
+2. 处理器现场和栈指针(内核栈)  
+3. 独立的栈空间(用户空间栈)
+4. errno 变量
+5. 信号屏蔽字
+6. 调度优先级  
+
+​    
+
+## 线程控制原语
+
+#### pthread_self()
+
+获取线程id，是在进程地址内部，用来标识线程身份的id
+
+```c
+ pthread_t pthread_self(void);
+```
+
+​    
+
+#### pthread_create()
+
+[pthread_create.cpp](https://github.com/BentleyCui/Linux/blob/main/%E7%BA%BF%E7%A8%8B/pthread_create.cpp)
+
+```c
+int pthread_create(pthread_t *thread, const pthread_attr_t *attr,void *(*start_routine) (void *), void *arg);
+返回值：
+    成功：0
+    失败：errno
+参数：
+    thread：传出参数，新创建的子线程id
+    attr：线程属性。传NULL表使用默认属性
+    (void *)：子线程回调函数。创建成功，pthread_create返回时，该函数自动调用
+    arg:回调函数的参数
+```
+
+在一个线程中调用 pthread_create()创建新的线程后，当前线程从 pthread_create()返回继续往下执行，而新的线
+程所执行的代码由我们传给 pthread_create 的函数指针 start_routine 决定  
+
+​    
+
+#### 练习
+
+循环创建多个线程，每个线程打印自己是第几个被创建的线程。 (类似于进程循环创建子进程)  
+
+[pthread_more.c](https://github.com/BentleyCui/Linux/blob/main/%E7%BA%BF%E7%A8%8B/pthread_more.c)
