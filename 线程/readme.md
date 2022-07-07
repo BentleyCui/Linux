@@ -1,3 +1,5 @@
+![线程](https://user-images.githubusercontent.com/59153788/177683266-af83ece7-1617-4140-aec1-e2e35feb7e4a.png)
+
 ## 线程的基本概念
 
 LWP： light weight process 轻量级的进程，本质仍是进程(在 Linux 环境下)  
